@@ -1,7 +1,7 @@
 # master_bsc
 
 Sumber data KPI untuk **BSC Designer** (data source "HTTP / web script").
-Data disimpan sebagai CSV, lalu diubah menjadi file JSON yang disajikan lewat GitHub Pages.
+Data disimpan sebagai CSV, lalu diubah menjadi file JSON yang diambil BSC Designer langsung dari GitHub (raw).
 
 ## Format yang dibaca BSC Designer
 
@@ -17,13 +17,15 @@ Di **KPI data source → Query properties** pada indikator:
 
 | Field | Isi |
 |---|---|
-| Url template | `https://firzi15.github.io/master_bsc/api/revenue_jakarta/%%date%%.json` |
+| Url template | `https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_jakarta/%%date%%.json` |
 | Date format | `yyyy-MM` |
 
 Klik **Test url**. Contoh untuk April 2026:
-`https://firzi15.github.io/master_bsc/api/revenue_jakarta/2026-04.json`
+`https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_jakarta/2026-04.json`
 
 Nama indikator ditulis langsung di URL (bukan `%%name%%`) agar tidak bermasalah dengan spasi.
+
+Catatan: setelah data diubah, URL raw bisa butuh beberapa menit sebelum menampilkan angka terbaru (cache GitHub).
 
 ## Menambah / mengubah data
 
@@ -34,7 +36,7 @@ Nama indikator ditulis langsung di URL (bukan `%%name%%`) agar tidak bermasalah 
    ```
    Angka boleh ditulis dengan titik ribuan (`4.931.164.624`).
 2. Commit ke `main`. GitHub Actions menjalankan `build.py` dan memperbarui folder `api/` otomatis.
-3. URL indikator baru: `https://firzi15.github.io/master_bsc/api/revenue_bandung/%%date%%.json`
+3. URL indikator baru: `https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_bandung/%%date%%.json`
 
 Daftar semua indikator dan bulan yang tersedia: `api/index.json`.
 
