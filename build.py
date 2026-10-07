@@ -2,7 +2,8 @@
 
 Each data/<indikator>.csv (columns: bulan,value with bulan = YYYY-MM)
 becomes api/<indikator>/<YYYY-MM>.json containing {"value": ..., "name": ...},
-the format BSC Designer's HTTP data source reads.
+the format BSC Designer's HTTP data source reads. Values are divided by
+DIVISOR (rupiah -> juta rupiah) to match the scorecard.
 """
 import csv
 import json
@@ -13,6 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
 API = ROOT / "api"
+
+# CSV berisi rupiah penuh; BSC Designer memakai juta rupiah (target 8310 = 8,31 miliar).
+DIVISOR = 1_000_000
 
 
 def parse_number(raw: str) -> float:
@@ -41,7 +45,7 @@ def main() -> None:
                 month = row["bulan"].strip()
                 if not re.fullmatch(r"\d{4}-\d{2}", month):
                     raise ValueError(f"{path.name}: bulan '{month}' harus format YYYY-MM")
-                value = parse_number(row["value"])
+                value = round(parse_number(row["value"]) / DIVISOR, 2)
                 body = json.dumps({"value": value, "name": name})
                 yyyy, mm = month.split("-")
                 # yyyy-MM (2026-04) dan MM.yyyy (04.2026), dua format yang bisa dipilih di BSC

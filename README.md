@@ -8,7 +8,7 @@ Data disimpan sebagai CSV, lalu diubah menjadi file JSON yang diambil BSC Design
 BSC Designer memanggil satu URL per tanggal dan membaca field `value`:
 
 ```json
-{"value": 4931164624, "name": "Revenue Jakarta"}
+{"value": 4931.16, "name": "Revenue Jakarta"}
 ```
 
 ## Setting di BSC Designer
@@ -34,7 +34,8 @@ Catatan: setelah data diubah, URL raw bisa butuh beberapa menit sebelum menampil
    bulan,value
    2026-01,1234567890
    ```
-   Angka boleh ditulis dengan titik ribuan (`4.931.164.624`).
+   Isi dalam **rupiah penuh**; angka boleh ditulis dengan titik ribuan (`4.931.164.624`).
+   `build.py` mengubahnya ke **juta rupiah** (4931.16) agar sesuai skala target di BSC.
 2. Commit ke `main`. GitHub Actions menjalankan `build.py` dan memperbarui folder `api/` otomatis.
 3. URL indikator baru: `https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_bandung/%%date%%.json`
 
