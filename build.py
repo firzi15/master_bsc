@@ -42,9 +42,11 @@ def main() -> None:
                 if not re.fullmatch(r"\d{4}-\d{2}", month):
                     raise ValueError(f"{path.name}: bulan '{month}' harus format YYYY-MM")
                 value = parse_number(row["value"])
-                (out_dir / f"{month}.json").write_text(
-                    json.dumps({"value": value, "name": name}), encoding="utf-8"
-                )
+                body = json.dumps({"value": value, "name": name})
+                yyyy, mm = month.split("-")
+                # yyyy-MM (2026-04) dan MM.yyyy (04.2026), dua format yang bisa dipilih di BSC
+                for fname in (f"{month}.json", f"{mm}.{yyyy}.json"):
+                    (out_dir / fname).write_text(body, encoding="utf-8")
                 months.append(month)
         index[slug] = {"name": name, "bulan": months}
         print(f"{slug}: {len(months)} bulan")

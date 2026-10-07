@@ -18,7 +18,7 @@ Di **KPI data source → Query properties** pada indikator:
 | Field | Isi |
 |---|---|
 | Url template | `https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_jakarta/%%date%%.json` |
-| Date format | `yyyy-MM` |
+| Date format | `yyyy-MM` (ketik manual), atau pilih `MM.yyyy` dari Samples |
 
 Klik **Test url**. Contoh untuk April 2026:
 `https://raw.githubusercontent.com/firzi15/master_bsc/main/api/revenue_jakarta/2026-04.json`
